@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body ng-controller="searchController">
+<body ng-controller="searchCtrl">
 	<header class="head">
 		<div class="title">
 			<h1> Instagram Searcher</h1>
@@ -16,20 +16,40 @@
 	<div class="container">
 		<section class="search">
 			<div class="searchImage"> 
-					<input type="text" placeholder="enter a tag to search" ng-model="picture">
-					<input class="submission" type="submit"></button>
-				 </p>
+				<form name="searchTag" ng-submit="search(); submitted = true "novalidate>
+
+					<input type="text" placeholder="enter a tag to search" ng-model="tag" autofocus required>
+					
+					<button type="submit" class="submitButton" ng-click="reset()">Search </button>
+				</form>
+			
+				
 			</div>
 		</section>
 
-		<section class="search results">
-		<p>{{picture}} </p>
-			
+		<section class="pictureOutput">
+			<p class="searchVerify" ng-if="searching"> Retrieving search results</p>
+			<div class="result-text" ng-show="completed == true && searching == false">
+				<h4>We found {{results.length}} results for "{{tag}}"</h4>
+			</div>
+			<div class="results">
+				<div ng-repeat="result in results" ng-if="completed == true && submitted == false" class="image">
+				<!-- did not understand the image link -->
+
+					<a href="{{result.link}}" target="_blank"><img ng-src="{{result.images.low_resolution.url}}"></a>
+				</div>
+			</div>
+
 		</section>
+		<!-- container div -->
 	</div>
 	
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+	
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-animate.js"></script>
+
+
   <script src="main.js"></script>
 
 </body>
